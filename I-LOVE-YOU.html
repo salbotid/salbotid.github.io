@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Wanna Be BoyFriend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f702ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+            overflow: hidden; /* Mencegah scrollbar */
+        }
+        h1 {
+            color: rgb(10, 10, 10);
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: #f305d3;
+            border-radius: 50px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            border: none;
+            transition: 0.3s;
+        }
+        .button:hover {
+            opacity: 0.8;
+        }
+        .no-button {
+            color: rgb(107, 107, 107);
+        }
+        .form-container {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .form-container input {
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #adadad;
+        }
+        .location-options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .location-button {
+            background-color: #f305d3;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            border: none;
+            transition: 0.3s;
+        }
+        .location-button:hover {
+            opacity: 0.8;
+        }
+        .selected {
+            background-color: #d5006d; /* Warna untuk tombol yang dipilih */
+            color: white; /* Warna teks untuk tombol yang dipilih */
+        }
+        .moving {
+            position: relative;
+            transition: all 0.5s;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            animation: pop 0.5s forwards;
+        }
+        @keyframes pop {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Do You Wanna Be GirlFriend</h1>
+    <button class="button" id="yesButton">Yes I Do</button>
+    <button class="button no-button" id="noButton">No, Leave Me Alone</button>
+
+    <div class="form-container" id="formContainer">
+        <h2>First Date Details</h2>
+        <input type="date" id="firstDate" required>
+        <input type="time" id="firstTime" required>
+        <h3>Pilih tempat pertama kencan:</h3>
+        <div class="location-options">
+            <button class="location-button" id="cafe" onclick="selectLocation('cafe')">Kafe</button>
+            <button class="location-button" id="park" onclick="selectLocation('park')">Taman</button>
+            <button class="location-button" id="cinema" onclick="selectLocation('cinema')">Bioskop</button>
+            <button class="location-button" id="restaurant" onclick="selectLocation('restaurant')">Restoran</button>
+        </div>
+        <button type="submit" id="submitButton">Kirim</button>
+    </div>
+
+    <script>
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const formContainer = document.getElementById('formContainer');
+        const locationButtons = document.querySelectorAll('.location-button');
+
+        yesButton.addEventListener('click', () => {
+            formContainer.style.display = 'block';
+            yesButton.style.display = 'none';
+            noButton.style.display = 'none';
+        });
+
+        noButton.addEventListener('click', () => {
+            const randomX = Math.floor(Math.random() * 300) - 150;
+            const randomY = Math.floor(Math.random() * 300) - 150;
+            noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        });
+
+        function selectLocation(location) {
+            locationButtons.forEach(button => {
+                button.classList.remove('selected');
+            });
+            document.getElementById(location).classList.add('selected');
+        }
+
+        document.getElementById('submitButton').addEventListener('click', (event) => {
+            event.preventDefault();
+            alert('Form telah dikirim!');
+        });
+
+        // Menambahkan efek jejak cinta
+        document.addEventListener('mousemove', (event) => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = `${event.pageX}px`;
+            heart.style.top = `${event.pageY}px`;
+            document.body.appendChild(heart);
+
+            // Menghapus elemen hati setelah 0.5 detik
+            setTimeout(() => {
+                heart.remove();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
